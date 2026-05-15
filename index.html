@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barcode Shelf Tag System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
+    <style>
+        .tag-container {
+            width: 80mm; /* Sticker ဆိုဒ်အလိုက် ချိန်ပါ */
+            border: 1px solid #000;
+            padding: 10px;
+            margin: 10px;
+            display: inline-block;
+        }
+        @media print {
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container mt-4">
+        <h2 class="no-print">Shelf Tag Generator</h2>
+        <div id="labels-output">
+            </div>
+    </div>
+
+    <script>
+        // နမူနာ Data (နောက်ပိုင်းတွင် Google Sheets မှ Fetch လုပ်မည်)
+        const sampleData = [
+            { name: "Steel Colander W/Plastic Handle 24cm", code: "024", barcode: "5300104000033", price: "9,600", date: "12/10/25" }
+        ];
+
+        function renderTags(data) {
+            const container = document.getElementById('labels-output');
+            data.forEach((item, index) => {
+                const tagHtml = `
+                    <div class="tag-container bg-white">
+                        <div class="text-center text-danger fw-bold h5">Star Mart</div>
+                        <div class="fw-bold text-dark">${item.name}</div>
+                        <div class="fw-bold">${item.code}</div>
+                        <div class="d-flex justify-content-between align-items-end mt-2">
+                            <svg id="barcode-${index}"></svg>
+                            <div class="bg-warning p-2 text-center" style="min-width: 100px;">
+                                <span class="h4 fw-bold mb-0">${item.price}</span>
+                                <div style="font-size: 0.8rem;">Ks.</div>
+                            </div>
+                        </div>
+                        <div class="text-end small" style="font-size: 0.6rem;">${item.date}</div>
+                    </div>
+                `;
+                container.innerHTML += tagHtml;
+                
+                // Barcode ထုတ်ပေးခြင်း
+                setTimeout(() => {
+                    JsBarcode(`#barcode-${index}`, item.barcode, {
+                        format: "CODE128",
+                        width: 1.2,
+                        height: 35,
+                        displayValue: false
+                    });
+                }, 0);
+            });
+        }
+
+        renderTags(sampleData);
+    </script>
+</body>
+</html>
