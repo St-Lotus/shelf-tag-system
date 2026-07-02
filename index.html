@@ -198,10 +198,10 @@
                 setTimeout(() => {
                     JsBarcode(`#barcode-${index}`, String(item['Barcode Number']), {
                         format: "CODE128",
-                        width: 2,           // Barcode အမဲတန်း စိပ်/ကျဲ အချိုး
-                        height: 30,          // Barcode အမြင့်
-                        displayValue: true,  // နံပါတ်ကို အောက်မှာပြမည်
-                        fontSize: 11,
+                        width: 1,           // Barcode လိုင်းအထူကို 1 အထိ လျှော့ချပေးလိုက်ပါတယ် (ဒါမှ ဆိုဒ်ကျဉ်းကျဉ်းထဲ ဆံ့မှာပါ)
+                        height: 25,         // အမြင့်ကို 25mm ဝန်းကျင် အရွယ်အစားရအောင် ညှိလိုက်ပါတယ်
+                        displayValue: true, 
+                        fontSize: 10,       // စာလုံးဆိုဒ်ကို နည်းနည်းလေး သေးလိုက်ပါတယ်
                         fontOptions: "bold",
                         margin: 0
                     });
