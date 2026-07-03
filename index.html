@@ -8,7 +8,6 @@
     <script src="https://unpkg.com/jsbarcode@3.11.5/dist/JsBarcode.all.min.js"></script>
     
     <style>
-        /* Bootstrap ပေါ်မမှီခိုဘဲ ကိုယ်ပိုင် CSS စနစ်ဖြင့် အတိုင်းအတာကို အသေထိန်းချုပ်ခြင်း */
         body { background-color: #f8f9fa; font-family: 'Arial', sans-serif; margin: 0; padding: 0; }
         
         .no-print-bar {
@@ -31,7 +30,7 @@
             border-radius: 4px;
         }
 
-        /* Screen တွင်ပြသမည့် Grid စနစ် */
+        /* Screen View Layout */
         .print-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, 75mm);
@@ -40,7 +39,7 @@
             justify-content: center;
         }
 
-        /* 7.5cm x 3.5cm အတိအကျ ထွက်လာစေရန် မဖြစ်မနေ စည်းကမ်းသတ်မှတ်ချက် */
+        /* 7.5cm x 3.5cm Dimensions */
         .tag-container {
             width: 75mm !important; 
             height: 35mm !important;
@@ -142,7 +141,7 @@
             color: #000;
         }
 
-        /* Print စနစ် သတ်မှတ်ချက် */
+        /* Print Settings */
         @media print {
             @page {
                 size: A4 portrait;
@@ -175,7 +174,7 @@
     <div id="labels-output" class="print-grid"></div>
 
     <script>
-        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbzvwOo7NhTNipukzgJodvytZ95SJphex3fjabrfgCe7dpcGlg9TB6B9WSKaXIrY7Pnw/exec';
+        const WEB_APP_URL = 'သင့်ရဲ့_WEB_APP_URL_ကိုပြန်ထည့်ပါ';
 
         async function fetchData() {
             try {
@@ -196,9 +195,10 @@
                 let rawDate = String(item['Date'] || '');
                 let cleanDate = rawDate.includes('T') ? rawDate.split('T')[0] : rawDate;
 
+                // tag-header ထဲတွင် Star Mart အစား St.Lotus သို့ ပြောင်းလဲထားပါသည်
                 const tagHtml = `
                     <div class="tag-container">
-                        <div class="tag-header">Star Mart</div>
+                        <div class="tag-header">St.Lotus</div>
                         <div class="item-name">${item['Item Name']}</div>
                         <div class="item-code">${item['Code']}</div>
                         
@@ -220,7 +220,6 @@
                 `;
                 container.innerHTML += tagHtml;
                 
-                // Script Loading သေချာစေရန် စစ်ဆေးပြီးမှ Render လုပ်မည်
                 setTimeout(() => {
                     if (typeof JsBarcode !== 'undefined') {
                         JsBarcode(`#barcode-${index}`, String(item['Barcode Number']), {
@@ -233,8 +232,6 @@
                             textMargin: 2,
                             margin: 0
                         });
-                    } else {
-                        console.error("JsBarcode library failed to load from CDN.");
                     }
                 }, 50);
             });
