@@ -174,6 +174,7 @@
     <div id="labels-output" class="print-grid"></div>
 
     <script>
+        // ⚠️ ဒီနေရာမှာ သင့်ရဲ့ Google Sheets Web App URL အစစ်ကို ပြန်ထည့်ပေးပါရန်
         const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbwiHSWgZlUNar8oI0LsRg72kwklJ9LSpgoqCIQYWIxZNlHCmYMR1z5KeQ2wWq4aBHgR/exec';
 
         async function fetchData() {
@@ -183,7 +184,7 @@
                 renderTags(data);
             } catch (error) {
                 console.error(error);
-                alert('Data ဆွဲယူရတာ အဆင်မပြေပါသဖြင့် ကွန်ရက်ပြန်စစ်ပေးပါ။');
+                alert('Data ဆွဲယူရတာ အဆင်မပြေပါသဖြင့် ကွန်ရက် သို့မဟုတ် Web App URL ကို ပြန်စစ်ပေးပါ။');
             }
         }
 
@@ -195,7 +196,6 @@
                 let rawDate = String(item['Date'] || '');
                 let cleanDate = rawDate.includes('T') ? rawDate.split('T')[0] : rawDate;
 
-                // tag-header ထဲတွင် Star Mart အစား St.Lotus သို့ ပြောင်းလဲထားပါသည်
                 const tagHtml = `
                     <div class="tag-container">
                         <div class="tag-header">St.Lotus</div>
